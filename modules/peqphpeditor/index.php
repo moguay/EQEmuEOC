@@ -4,7 +4,7 @@ $current_revision = "5 January 2019";
 
 require_once("config.php");
 require_once("lib/logging.php");
-if ($mysql_class == "mysqli")
+if ($mysqli_class == "mysqli")
   require_once("classes/mysqli.php");
 else 
   require_once("classes/mysql.php");

@@ -15,56 +15,56 @@ if(isset($_GET['do_translate'])){
 
     if($translation_type == "npc" || $translation_type == "auto"){
         $query = "SELECT `id`, `name`, `lastname` FROM `npc_types`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $npc_names[$row[0]][0] = ($row[1] . ($row[2] != "" ? ', ' . $row[2] : ''));
         }
     }
     if($translation_type == "faction" || $translation_type == "auto"){
         $query = "SELECT `id`, `name` FROM `faction_list`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $faction_names[$row[0]][0] = $row[1];
         }
     }
     if($translation_type == "items" || $translation_type == "auto"){
         $query = "SELECT `id`, `Name` FROM `items`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $item_names[$row[0]][0] = $row[1];
         }
     }
      if($translation_type == "items_lore" || $translation_type == "auto"){
         $query = "SELECT `id`, `Name`, `lore` FROM `items`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $item_names_lore[$row[0]][0] = $row[1] . ($row[2] != "" ? ' Lore: ' . $row[2] : '');
         }
     }
     if($translation_type == "tasks" || $translation_type == "auto"){
         $query = "SELECT `id`, `title` FROM `tasks`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $task_names[$row[0]][0] = $row[1];
         }
     }
     if($translation_type == "spells" || $translation_type == "auto"){
         $query = "SELECT `id`, `name` FROM `spells_new`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $spell_names[$row[0]][0] = $row[1];
         }
     }
     if($translation_type == "tasks_with_activities" || $translation_type == "auto"){
         $query = "SELECT `id`, `title` FROM `tasks`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $task_names[$row[0]][0] = $row[1];
         }
 
         $query = "SELECT * FROM `activities`";
-        $result = mysql_query($query);
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);
+        while($row = mysqli_fetch_array($result)){
             $description = "";
             $description .= $row['text1'];
             $description .= $row['text2'];

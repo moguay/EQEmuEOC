@@ -24,8 +24,8 @@
 		$Return .= $SpecIncludes. '<title>'.$page_title.'</title>';
 		// Editor Music Options
 		if($_SESSION['IEMusic'] == 1){	$Return .= "<div id='Music'><embed src=\"images/001130031538.wav\" hidden=\"true\" autostart=\"true\" loop=\"true\" type=\"application/x-mplayer2\"/></div>"; } else{ $Return .= "<div id='Music'></div>"; }
-		$result = mysql_query("SELECT * FROM items WHERE id = '" . $ItemID . "';");
-		if(!$result){ $Return .= 'Could not run query: ' . mysql_error(); exit; } 
+		$result = mysqli_query("SELECT * FROM items WHERE id = '" . $ItemID . "';");
+		if(!$result){ $Return .= 'Could not run query: ' . mysqli_error(); exit; } 
 
 		echo '<style>
 				.section_header{
@@ -37,8 +37,8 @@
 		
 		### Loop through item fields
 		### Automatically Generate the column names from the Table
-		$columns = mysql_num_fields($result);
-		$Item_Name = mysql_result($result, 0, 2);
+		$columns = mysqli_num_fields($result);
+		$Item_Name = mysqli_result($result, 0, 2);
 		$Return .= '<h2>' . $Item_Name . '</h2><small>All changes are not saved until the "Save" button has been pressed.<br>Items can be copied by simple changing the Item ID to a free unassigned ID in the database using the form below</small><hr>';
 		$Return .= '
 			<form method="POST" id="frmMain" action="min.php?Mod=IE" class="customForm" style="display:inline;">
@@ -52,14 +52,14 @@
 		for ($i = 0; $i < $columns; $i++){
 			if($Debug){ echo 'dbg1<br>'; }
 			$FClass = "";
-			$FieldName = mysql_field_name($result, $i);
+			$FieldName = mysqli_field_name($result, $i);
 			$FieldNameLabel = $ITD[$FieldName][1];
 			
 			
 			if($FieldNameLabel == False){ $FieldNameLabel = $FieldName; } //Exchange the Field name for the Array field name
 
 			/* Field Data */
-			$FieldData = mysql_result($result, 0, $i);
+			$FieldData = mysqli_result($result, 0, $i);
 			if($FieldData == ""){  $FieldData = $ITD[$FieldName][0]; }
 			if($FieldName == "Name"){ PageTitle($ItemID . ": "  . $FieldData); }
 			$CharCount = strlen($FieldData); if($CharCount < 5){ $CharCount = 5;  }

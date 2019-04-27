@@ -60,10 +60,10 @@
 				  (npc_types ,
 				  spawn2)
 				INNER JOIN spawnentry ON npc_types.id = spawnentry.npcID AND spawnentry.spawngroupID = spawn2.spawngroupID
-				where spawn2.zone = '" . mysql_real_escape_string($zone) . "';";
-		$result = mysql_query($sql);
+				where spawn2.zone = '" . mysqli_real_escape_string($zone) . "';";
+		$result = mysqli_query($sql);
 		if($offline == 1){ $data = array(); }
-		while($row = mysql_fetch_array($result)){
+		while($row = mysqli_fetch_array($result)){
 			$ret .= '
 				<span style="position:absolute;left:' . ($left_offset - $row['x']) . 'px;top:' . ($top_offset - $row['y']) . 'px" >
 					<i class="fa fa-chevron-circle-up" style="color: #333;-webkit-transform:rotate(' . CalcEQHeadingToBrowser($row['heading']) . 'deg);"></i>

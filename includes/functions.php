@@ -76,7 +76,7 @@
     function fetchRows($result) {
         $res = array();
         if ($result) {
-            while ($record = mysql_fetch_assoc($result)) { $res[] = $record; }
+            while ($record = mysqli_fetch_assoc($result)) { $res[] = $record; }
         }
         return $res;
     }
@@ -89,18 +89,18 @@
     function DuplicateMySQLRecord ($table, $id_field, $id_copied_from, $copied_to_id = 0) {
         /* load the original record into an array */
 
-        $result = mysql_query("SELECT * FROM {$table} WHERE {$id_field} = {$id_copied_from}");
-        # echo mysql_error();
-        $original_record = mysql_fetch_assoc($result);
+        $result = mysqli_query("SELECT * FROM {$table} WHERE {$id_field} = {$id_copied_from}");
+        # echo mysqli_error();
+        $original_record = mysqli_fetch_assoc($result);
         if ($copied_to_id == 0) {
             /* insert the new record and get the new auto_increment id */
-            mysql_query("INSERT INTO {$table} (`{$id_field}`) VALUES (NULL)");
-            $new_id = mysql_insert_id();
-            echo mysql_error();
+            mysqli_query("INSERT INTO {$table} (`{$id_field}`) VALUES (NULL)");
+            $new_id = mysqli_insert_id();
+            echo mysqli_error();
         }
         else {
             $new_id = $copied_to_id;
-            mysql_query("INSERT INTO {$table} (`{$id_field}`) VALUES (" . $copied_to_id . ")");
+            mysqli_query("INSERT INTO {$table} (`{$id_field}`) VALUES (" . $copied_to_id . ")");
         }
 
         /* generate the query to update the new record with the previous values */
@@ -112,9 +112,9 @@
         }
         $query = substr($query, 0, strlen($query) - 2); // lop off the extra trailing comma
         $query .= " WHERE {$id_field}={$new_id}";
-        mysql_query($query);
+        mysqli_query($query);
 
-        # echo mysql_error();
+        # echo mysqli_error();
 
         return $new_id;
     }
@@ -129,8 +129,8 @@
             WHERE t2.' . $id_field . ' IS NULL
             ORDER BY next_id DESC
             LIMIT 1';
-        $result = mysql_query($query);echo mysql_error();
-        while($row = mysql_fetch_array($result)){
+        $result = mysqli_query($query);echo mysqli_error();
+        while($row = mysqli_fetch_array($result)){
             return $row['next_id'];
         }
         return '';
@@ -146,7 +146,7 @@
                     account.`name` = "'.$name.'"
                   AND
                     account.`password` = "'.$pass.'"';
-        $result = mysql_query($query);
+        $result = mysqli_query($query);
         $password = fetchRows($result)[0]['password'];
         if($password == $pass && $password !== "") { return true; }
         return false;
@@ -159,7 +159,7 @@
                     account
                   WHERE
                     account.`name` = "'.$name.'"';
-        $result = mysql_query($query);
+        $result = mysqli_query($query);
         $status = fetchRows($result)[0]['status'];
         return $status;
     }

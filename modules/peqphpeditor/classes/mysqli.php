@@ -104,7 +104,7 @@ function quote_smart($value) {
 
   // Quote if not integer
   if (!is_numeric($value)) {
-    //$value = "'" . mysql_real_escape_string($value) . "'";
+    //$value = "'" . mysqli_real_escape_string($value) . "'";
   }
 
   // Deter UNION SQL Injection

@@ -25,8 +25,8 @@ if (isset($_GET['spellview'])) {
     require_once('includes/spell.inc.php');
     require_once('includes/alla_functions.php');
     if ($_GET['spellview'] > 0) {
-        $QueryResult = mysql_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spellview'] . ";");
-        while ($row = mysql_fetch_array($QueryResult)) {
+        $QueryResult = mysqli_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spellview'] . ";");
+        while ($row = mysqli_fetch_array($QueryResult)) {
             $Content .= BuildSpellInfo($row, 1);
         }
     } else {
@@ -42,8 +42,8 @@ if (isset($_GET['item_view'])) {
     require_once('includes/alla_functions.php');
     require_once('modules/ItemEditor/constants_ie.php');
     // echo '<style></style>';
-    $QueryResult = mysql_query("SELECT * FROM items WHERE `id` = " . $_GET['item_view'] . ";");
-    while ($row = mysql_fetch_array($QueryResult)) {
+    $QueryResult = mysqli_query("SELECT * FROM items WHERE `id` = " . $_GET['item_view'] . ";");
+    while ($row = mysqli_fetch_array($QueryResult)) {
         // $Content .= BuildSpellInfo($row, 1);
         echo BuildItemStats($row, 1, 'item_view');
     }
@@ -56,8 +56,8 @@ if (isset($_GET['spell_view'])) {
     require_once('includes/constants.php');
     require_once('includes/alla_functions.php');
     require_once('modules/ItemEditor/constants_ie.php');
-    $QueryResult = mysql_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spell_view'] . ";");
-    while ($row = mysql_fetch_array($QueryResult)) {
+    $QueryResult = mysqli_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spell_view'] . ";");
+    while ($row = mysqli_fetch_array($QueryResult)) {
         $Content .= BuildSpellInfo($row, 1, 'item_view');
         echo $Content;
     }
@@ -75,8 +75,8 @@ if (isset($_GET['spell_view_data_quick'])) {
     require_once('includes/alla_functions.php');
     require_once('modules/ItemEditor/constants_ie.php');
     require_once('modules/SpellEditor/functions.php');
-    $result  = mysql_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spell_view_data_quick'] . ";");
-    $columns = mysql_num_fields($result);
+    $result  = mysqli_query("SELECT * FROM spells_new WHERE `id` = " . $_GET['spell_view_data_quick'] . ";");
+    $columns = mysqli_num_fields($result);
     echo '<div style="width:600px;height:700px;overflow-y;scroll">';
     echo '<h4 class="page-title"><i class="fa fa-database"></i> Spell Inline Editor</h4><hR>';
     echo '<table class="table table-hover">';
@@ -85,8 +85,8 @@ if (isset($_GET['spell_view_data_quick'])) {
 			<th>Data</th>
 		</tr>';
     for ($i = 0; $i < $columns; $i++) {
-        $FieldName = mysql_field_name($result, $i);
-        $FieldData = mysql_result($result, 0, $i);
+        $FieldName = mysqli_field_name($result, $i);
+        $FieldData = mysqli_result($result, 0, $i);
         echo '<tr><td><b>' . $FieldName . '</b><br><small>' . $spells_new_fields[$FieldName][0] . '</small></td><td> ' . SpellFieldInput($_GET['spell_view_data_quick'], $FieldName, $FieldData) . '</td></tr>';
     }
     echo '</table>';

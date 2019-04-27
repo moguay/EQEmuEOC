@@ -10,7 +10,7 @@
  */
 function PrintQueryResults($FoundObjects, $MaxObjectsReturned, $OpenObjectByIdPage, $ObjectDescription, $ObjectsDescription, $IdAttribute, $NameAttribute, $ExtraField, $ExtraFieldDescription, $ExtraSkill){
 	global $dbskills;
-	$ObjectsToShow = mysql_num_rows($FoundObjects);
+	$ObjectsToShow = mysqli_num_rows($FoundObjects);
 	if($ObjectsToShow > LimitToUse($MaxObjectsReturned)){
 		$ObjectsToShow = LimitToUse($MaxObjectsReturned);
 		$MoreObjectsExist = True;
@@ -33,7 +33,7 @@ function PrintQueryResults($FoundObjects, $MaxObjectsReturned, $OpenObjectByIdPa
 		echo  "</b></li>\n";
 		echo  "<ul>\n";
 		for( $j = 1 ; $j <= $ObjectsToShow ; $j ++ ){
-			$row = mysql_fetch_array($FoundObjects);
+			$row = mysqli_fetch_array($FoundObjects);
 			$PrintString = " <li><a href='".$OpenObjectByIdPage."?id=".$row[$IdAttribute]."'>";
 			if ($ObjectDescription == "npc"){
 				// Clean up the name for NPCs
@@ -258,8 +258,8 @@ function getspell($id) {
 	{
 		$query="SELECT * FROM spells_new WHERE id=$id"; 
 	}
-	$result=mysql_query($query) or message_die('functions.php','getspell',$query,mysql_error());
-	$s=mysql_fetch_array($result);
+	$result=mysqli_query($query) or message_die('functions.php','getspell',$query,mysqli_error());
+	$s=mysqli_fetch_array($result);
 	return $s;
 }
 
@@ -741,22 +741,22 @@ function CanThisNPCDoubleAttack($class,$level) { // mob.cpp
 
 // Automatically format and populate the table based on the query
 function AutoDataTable($Query) {
-	$result = mysql_query($Query);
+	$result = mysqli_query($Query);
 	if (!$result)
 	{
-		echo 'Could not run query: ' . mysql_error();
+		echo 'Could not run query: ' . mysqli_error();
 		exit;
 	}
-	$columns = mysql_num_fields($result);
+	$columns = mysqli_num_fields($result);
 	echo "<table border=0 width=100%><thead>";
 	$RowClass = "lr";
 	###Automatically Generate the column names from the Table	
 		for ($i = 0; $i < $columns; $i++)
 		{
-			echo "<th class='menuh'>". ucfirstwords(str_replace('_',' ',mysql_field_name($result, $i))) . " </th>";
+			echo "<th class='menuh'>". ucfirstwords(str_replace('_',' ',mysqli_field_name($result, $i))) . " </th>";
 		}
 	echo "</tr></thead><tbody>";
-	while($row = mysql_fetch_array($result))
+	while($row = mysqli_fetch_array($result))
 	{ 
 		echo "<tr class='".$RowClass."'>";
 		for($i = 0; $i < $columns; $i++)
@@ -779,17 +779,17 @@ function AutoDataTable($Query) {
 // Prints all fields of a table to easily create an array for default values
 // Example: AutoCreateArray("SELECT * FROM spells_new WHERE id = 3", "dbspelldefaults")
 function AutoCreateArray($Query, $ArrayName) {
-	$result = mysql_query($Query);
+	$result = mysqli_query($Query);
 	if (!$result)
 	{
-		echo 'Could not run query: ' . mysql_error();
+		echo 'Could not run query: ' . mysqli_error();
 	}
-	$columns = mysql_num_fields($result);
-	$row = mysql_fetch_array($result);
+	$columns = mysqli_num_fields($result);
+	$row = mysqli_fetch_array($result);
 	echo "\$" . $ArrayName . "=array(<br>";
 	for ($i = 0; $i < $columns; $i++)
 	{
-		echo "	\"" . mysql_field_name($result, $i) . "\"	=>	\"" . $row[$i] . "\",<br>";
+		echo "	\"" . mysqli_field_name($result, $i) . "\"	=>	\"" . $row[$i] . "\",<br>";
 	}
 	echo ");";
 }
@@ -1472,9 +1472,9 @@ function BuildSpellInfo($spell, $show_name_icon) {
 	 *  If no row is selected by '$query', returns an emty string
 	 */
 	function GetFieldByQuery($field,$query)
-	{ $QueryResult = mysql_query($query) or message_die('mysql.php','GetFiedByQuery',$query,mysql_error());
-	  if(mysql_num_rows($QueryResult) > 0)
-	  { $rows=mysql_fetch_array($QueryResult) or message_die('mysql.php','GetFiedByQuery',"MYSQL_FETCH_ARRAY",mysql_error());
+	{ $QueryResult = mysqli_query($query) or message_die('mysql.php','GetFiedByQuery',$query,mysqli_error());
+	  if(mysqli_num_rows($QueryResult) > 0)
+	  { $rows=mysqli_fetch_array($QueryResult) or message_die('mysql.php','GetFiedByQuery',"mysqli_FETCH_ARRAY",mysqli_error());
 		$Result = $rows[$field];
 	  }
 	  else
@@ -1486,8 +1486,8 @@ function BuildSpellInfo($spell, $show_name_icon) {
 	/** Runs '$query' and returns the first (arbitrarily) found row.
 	 */
 	function GetRowByQuery($query)
-	{ $QueryResult = mysql_query($query) or mysql_die($query);
-	  $Result = mysql_fetch_array($QueryResult);
+	{ $QueryResult = mysqli_query($query) or mysqli_die($query);
+	  $Result = mysqli_fetch_array($QueryResult);
 
 	  return $Result;
 	}

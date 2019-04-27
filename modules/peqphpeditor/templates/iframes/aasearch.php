@@ -69,7 +69,7 @@ function getExpansionName($expid) {
 
 if(isset($_GET['search']) && ($_GET['search'] != '')) {
   require("../../config.php");
-  if($mysql_class = "mysqli")
+  if($mysqli_class = "mysqli")
     require("../../classes/mysqli.php");
   else
     require("../../classes/mysql.php");
