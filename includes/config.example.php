@@ -47,19 +47,19 @@ $eoc_dbpasswd = $dbpasswd;
 $eoc_local    = mysqli_connect($eoc_dbhost, $eoc_dbuser, $eoc_dbpasswd);
 
 if ($eoc_local) {
-    mysqli_select_db($eoc_dbname, $eoc_local) or die("Impossible to select $eoc_dbname : " . mysqli_error());
+    mysqli_select_db($eoc_local, $eoc_dbname) or die("Impossible to select $eoc_dbname : " . mysqli_error());
 }
 function connect_local()
 {
     global $eoc_local, $eoc_dbname;
     if ($eoc_local) {
-        mysqli_select_db($eoc_dbname, $eoc_local) or die("Impossible to select $eoc_dbname : " . mysqli_error());
+        mysqli_select_db($eoc_local, $eoc_dbname) or die("Impossible to select $eoc_dbname : " . mysqli_error());
     }
 }
 
 $db = mysqli_connect($dbhost, $dbuser, $dbpasswd);
 if ($db) {
-    mysqli_select_db($dbname, $db) or die("Impossible to select $dbname : " . mysqli_error());
+    mysqli_select_db($db, $dbname) or die("Impossible to select $dbname : " . mysqli_error());
 }
 function connect_return()
 {
